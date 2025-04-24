@@ -10,8 +10,8 @@ const app = express();
 app.use(express.json());
 express.urlencoded(); // { extended: true }
 
-// app.use(gerenciadorErros);
-
 app.use(routes);
+
+app.use(gerenciadorErros);
 
 const server = app.listen(port, () => console.log(`Servidor escutando a porta ${port}`));
