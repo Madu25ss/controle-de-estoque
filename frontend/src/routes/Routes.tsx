@@ -1,5 +1,6 @@
 import { createBrowserRouter, RouteObject } from "react-router";
 import Root from "./Root";
+import Produtos from "@/pages/Produtos";
 
 export const routes: RouteObject[] = [
   {
@@ -8,7 +9,7 @@ export const routes: RouteObject[] = [
   },
   {
     path: "/produtos/listar",
-    element: <p>Página Listar</p>,
+    element: <Produtos />,
   },
 ];
 export const router = createBrowserRouter([
