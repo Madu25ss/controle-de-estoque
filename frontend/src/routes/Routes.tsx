@@ -1,11 +1,12 @@
 import { createBrowserRouter, RouteObject } from "react-router";
 import Root from "./Root";
 import Produtos from "@/pages/Produtos";
+import PagInicial from "@/pages/PagInicial";
 
 export const routes: RouteObject[] = [
   {
     index: true,
-    element: <p>Página Inicial</p>,
+    element: <PagInicial />,
   },
   {
     path: "/produtos/listar",

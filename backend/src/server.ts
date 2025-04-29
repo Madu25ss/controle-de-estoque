@@ -11,25 +11,26 @@ const app = express();
 app.use(express.json());
 express.urlencoded(); // { extended: true }
 // app.use(() => configCors(port, false));
-// const whitelist = new Set([
-//   `http://localhost:${port}`,
-//   `http://localhost:5173`,
-// ]);
 
-// const corsOptions = {
-//   origin: (origin, callback) => {
-//     if (origin === undefined || whitelist.has(origin)) {
-//       callback(null, true);
-//     } else {
-//       callback(new Error("Not allowed by CORS"));
-//     }
-//   },
-//   optionsSuccessStatus: 200,
-//   credentials: true,
-// };
+const whitelist = new Set([
+  `http://localhost:${port}`,
+  `http://localhost:5173`,
+]);
 
-// app.options("*", cors());
-app.use(cors());
+const corsOptions = {
+  origin: (origin, callback) => {
+    if (origin === undefined || whitelist.has(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error("Not allowed by CORS"));
+    }
+  },
+  optionsSuccessStatus: 200,
+  credentials: true,
+};
+
+app.options("/api", cors(corsOptions));
+app.use(cors(corsOptions));
 app.use(routes);
 
 app.use(gerenciadorErros);
