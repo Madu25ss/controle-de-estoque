@@ -34,7 +34,8 @@ export const listar = async (req:Request, res: Response, _nxt: NextFunction) => 
     select
       id,
       nome,
-      preco
+      preco,
+      quantidade
     from produtos
     where id_status = 1`;
 
