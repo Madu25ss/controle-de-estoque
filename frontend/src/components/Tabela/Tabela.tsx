@@ -1,32 +1,24 @@
 import {
-  // ColumnDef,
   flexRender,
   getCoreRowModel,
   useReactTable,
 } from "@tanstack/react-table";
-// import { colunas } from "./colunas";
-// import { Produto } from "@/types/produto";
+import { Produto } from "@/types/produto";
 import Button from "../Button";
-// import { useMemo } from "react";
 import { obterProdutos } from "@/services/produto";
 import useConfiguracaoTabela from "./ConfiguracaoTabela";
-import { Dispatch, SetStateAction } from "react";
 
 type TableProps = {
-  title: string;
-  modalState: {
-    isOpen: boolean;
-    setIsOpen: Dispatch<SetStateAction<boolean>>;
-    // setIsOpen: (state: boolean) => void;
-  }
+  titulo: string;
+  aoAbrir: (title?: string) => void;
+  setProduto: (produto: Produto) => void;
 };
 
-export const Table = ({ title, modalState }: TableProps) => {
-  // const columns = useMemo<ColumnDef<Produto>[]>(() => colunas, []);
-  const columns = useConfiguracaoTabela( modalState );
+export const Table = ({ titulo, aoAbrir, setProduto }: TableProps) => {
+  const columns = useConfiguracaoTabela(aoAbrir, setProduto);
   const { data, isFetching, isSuccess } = obterProdutos();
   const table = useReactTable({
-    data: data ?? [],
+    data: data ?? [],                
     columns,
     getCoreRowModel: getCoreRowModel(),
     // id da linha
@@ -36,8 +28,12 @@ export const Table = ({ title, modalState }: TableProps) => {
   return (
     <div className="flex flex-col bg-stone-50 rounded-md h-[100%] p-4">
       <div className="flex justify-between ps-1 pe-3 py-3 mb-4">
-        <h1 className="text-3xl font-light">{title}</h1>
-        <Button title={"Novo Produto"} to={"/"} />
+        <h1 className="text-3xl font-light">{titulo}</h1>
+        <Button
+          title={"Novo Produto"}
+          onClick={() => aoAbrir()}
+          className="bg-blue-500 rounded text-white px-3 py-1 border-none outline-0 shadow-md cursor-pointer transition delay-100 duration-300 ease-in-out hover:bg-blue-600 hover:-translate-y-0.5"
+        />
       </div>
 
       <table className="border-collapse">
